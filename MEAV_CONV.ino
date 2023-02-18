@@ -1,4 +1,8 @@
 #include <string>
+#include <EspMQTTClient.h>
+#include <stepper.h>
+#include <Adafruit NeoPixel.h>
+#include <arduino.h>
 
 //Константы-состояния:
 #define WAITING_STATE 0
@@ -33,6 +37,7 @@ void connectMQTT(){
 
 void setup() 
 {
+  connectMQTT();
 }
 
 
@@ -161,7 +166,6 @@ void errorStateHandler()
 
 void loop() 
 {
-  connectMQTT();
   getMQTT();
 
   switch (state) 
