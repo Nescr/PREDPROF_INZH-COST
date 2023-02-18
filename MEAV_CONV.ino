@@ -20,9 +20,21 @@ string selected = '0000'; //   - хранит значения цветов, п�
 int currentColor; //           - хранит код цвета, который определила СТЗ
 
 
+void connectMQTT(){
+  EspMQTTClient client( 
+    "MEAV_Wi-Fi", 
+    "MEAV_THE_BEST", 
+    "mqtt.by",  // MQTT Broker server ip 
+    "'login'",   // Can be omitted if not neededя 
+    "'password'",   // Can be omitted if not needed 
+    "23124"      // Client name that uniquely identify your device 
+  );
+}
+
 void setup() 
 {
 }
+
 
 
 bool getCmdMQTT() 
@@ -149,6 +161,7 @@ void errorStateHandler()
 
 void loop() 
 {
+  connectMQTT();
   getMQTT();
 
   switch (state) 
