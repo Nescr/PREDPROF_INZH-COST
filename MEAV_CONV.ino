@@ -44,34 +44,48 @@ void setup()
 
 bool getCmdMQTT() 
 {
-  return ;
+  String command = client.subscribe("/user/NESCR/start", [] (const String &payload); 
+  return command;
 }
 
 string getRedMQTT() 
 {
-  return ;
+  String red = client.subscribe("/user/NESCR/red", [] (const String &payload); 
+  return red;
 }
 
 string getGreenMQTT() 
 {
-  return ;
+  String green = client.subscribe("/user/NESCR/green", [] (const String &payload); 
+  return green;
 }
 
 string getBlueMQTT() 
 {
-  return ;
+  String blue = client.subscribe("/user/NESCR/blue", [] (const String &payload); 
+  return blue;
 }
 
 string getWhiteMQTT() 
 {
-  return ;
+  String white = client.subscribe("/user/NESCR/white", [] (const String &payload); 
+  return white;
 }
 
 bool checkObject()
 {
+  return
 }
 
 void convMove()
+{ 
+}
+
+void sortLeft()
+{ 
+}
+
+void sortRight()
 { 
 }
 
