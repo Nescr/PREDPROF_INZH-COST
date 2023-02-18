@@ -1,7 +1,6 @@
-#include <string>
 #include <EspMQTTClient.h>
 #include <stepper.h>
-#include <Adafruit NeoPixel.h>
+#include <Adafruit_NeoPixel.h>
 #include <arduino.h>
 
 //Константы-состояния:
@@ -14,14 +13,14 @@
 //Константы команды:
 #define START_CMD 0x0
 #define STOP_CMD 0x1
-#define NO_COLOR 0
+#define NO_COLOR 'ERROR'
 
 //Глобальные переменные:
 int state; //                  - хранит код текущего состояния системы
 bool conv_speed; //            - хранит код текущей скорости конвейера
 bool cmd; //                   - хранит код команды, полученной с MQTT сервера
-string selected = '0000'; //   - хранит значения цветов, полученные с MQTT в формате 'rgbw'
-int currentColor; //           - хранит код цвета, который определила СТЗ
+String selected = '0000'; //   - хранит значения цветов, полученные с MQTT в формате 'rgbw'
+String currentColor; //           - хранит код цвета, который определила СТЗ
 
 
 void connectMQTT(){
@@ -39,8 +38,6 @@ void setup()
 {
   connectMQTT();
 }
-
-
 
 bool getCmdMQTT() 
 {
@@ -72,9 +69,18 @@ string getWhiteMQTT()
   return white;
 }
 
+void runScan() {
+  Serial.println('1')
+}
+
+void getScan() {
+  String data = Serial.read();
+  return data;
+}
+
 bool checkObject()
 {
-  return
+  return;
 }
 
 void convMove()
@@ -96,6 +102,9 @@ void getMQTT()
   selected[1] = getGreenMQTT();
   selected[2] = getBlueMQTT();
   selected[3] = getWhiteMQTT();
+}
+
+void sendErrorMQTT() {
 }
 
 void waitingStateHandler() 
