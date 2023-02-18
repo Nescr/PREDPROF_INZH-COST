@@ -21,7 +21,7 @@ def getUART(result):
 def sendUART(result):
     ser.write(result)
 
-start = getUART()
+start = int(getUART())
 
 while not start:
     start = getUART()
