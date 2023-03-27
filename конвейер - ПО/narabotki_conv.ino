@@ -28,6 +28,9 @@
 // количество светодиодов на светодиодной ленте
 #define PIXEL_COUNT   16  
 
+// инициализация светодиодной ленты 
+Adafruit_NeoPixel strip(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
+
 // пин концевого датчика с стороны мотора сортирующей системы
 #define FIRST_BUTTON  D0
 
@@ -43,12 +46,12 @@ int start = 0;
 
 // подключение к серверу MQTT
 EspMQTTClient client(
-  "название сети",
-  "пароль",
-  "mqtt.by",  // MQTT Broker server ip
-  "мой юзер)",   // Can be omitted if not needed
-  "иой пароль)",   // Can be omitted if not needed
-  "23124"      // Client name that uniquely identify your device
+  "PREDPROF_RULIT",
+  "MEAV_TOP",
+  "mqtt.by",
+  "NESCR",
+  "nescr",
+  "23124"
 );
 
 // подписка на топики
@@ -61,7 +64,15 @@ void onConnectionEstablished()
   client.subscribe("mytopic/test", [] (const String &payload) { start = payload.toInt(); }); 
 } 
 
-//
+// первоначальная настройка светодиодной ленты
+void strip_setup()
+{
+  strip.begin();                    
+  strip.show();                    
+  strip.setBrightness(255);  
+}
+
+// возврат системы сортировка в начальное положение
 void return_shovel_to_centre()
 {
   while(!digitalRead(FIRST_BUTTON))
@@ -78,6 +89,7 @@ void return_shovel_to_centre()
 void setup()
 {
   Serial.begin(9600);
+  strip_setup();
   return_shovel_to_centre();
 }
 
