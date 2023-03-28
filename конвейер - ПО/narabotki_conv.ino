@@ -49,12 +49,12 @@ int start = 0;
 
 // подключение к серверу MQTT
 EspMQTTClient client(
-  "PREDPROF_RULIT",
-  "https://www.youtube.com/watch?v=eBGIQ7ZuuiU",
-  "mqtt.by",
-  "мой логин",
-  "мой пароль",
-  "23124"
+  "PREDPROF_RULIT",                                  // название сети Wi-Fi
+  "https://www.youtube.com/watch?v=eBGIQ7ZuuiU",     // пароль от сети Wi-Fi
+  "mqtt.by",                                         // IP/домен сервера
+  "мой логин",                                       // логин от сервера
+  "мой пароль",                                      // пароль от сервера
+  "23124"                                            // имя устройства
 );
 
 //
