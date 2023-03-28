@@ -85,7 +85,6 @@ void check_colors_start()
     Serial.println("Выбрано слишком много цветов. Для запуска нужно выбрать строго 2 цвета!!");
     client.publish("user/NESCR/message", "Успешно выбраны " + String(COLORS_NUM_FOR_START) + " цвета! Устройство готово к запускау!");
   }
-  ////////
 }
 
 // подписка на топики
