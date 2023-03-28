@@ -49,8 +49,8 @@ EspMQTTClient client(
   "PREDPROF_RULIT",
   "MEAV_TOP",
   "mqtt.by",
-  "NESCR",
-  "nescr",
+  "мой логин",
+  "мой пароль",
   "23124"
 );
 
