@@ -57,11 +57,11 @@ EspMQTTClient client(
 // подписка на топики
 void onConnectionEstablished() 
 { 
-  client.subscribe("mytopic/test", [] (const String &payload) { red   = payload.toInt(); }); 
-  client.subscribe("mytopic/test", [] (const String &payload) { green = payload.toInt(); }); 
-  client.subscribe("mytopic/test", [] (const String &payload) { blue  = payload.toInt(); }); 
-  client.subscribe("mytopic/test", [] (const String &payload) { white = payload.toInt(); }); 
-  client.subscribe("mytopic/test", [] (const String &payload) { start = payload.toInt(); }); 
+  client.subscribe("/user/NESCR/red",   [] (const String &payload) { red   = payload.toInt(); }); 
+  client.subscribe("/user/NESCR/green", [] (const String &payload) { green = payload.toInt(); }); 
+  client.subscribe("/user/NESCR/blue",  [] (const String &payload) { blue  = payload.toInt(); }); 
+  client.subscribe("/user/NESCR/white", [] (const String &payload) { white = payload.toInt(); }); 
+  client.subscribe("/user/NESCR/start", [] (const String &payload) { start = payload.toInt(); }); 
 } 
 
 // первоначальная настройка светодиодной ленты
@@ -72,19 +72,63 @@ void strip_setup()
   strip.setBrightness(255);  
 }
 
+
+// движение сортирующей системы влево
+void shovel_left()
+{
+  digitalWrite(DIR_SHOVEL , LOW);
+  digitalWrite(STEP_SHOVEL, HIGH); 
+  delayMicroseconds(100);
+  digitalWrite(DIR_SHOVEL , LOW);
+  digitalWrite(STEP_SHOVEL, LOW); 
+  delayMicroseconds(100);
+}
+
+// движение сортирующей системы вправо 
+void shovel_right()
+{
+  digitalWrite(DIR_SHOVEL , HIGH);
+  digitalWrite(STEP_SHOVEL, HIGH); 
+  delayMicroseconds(100);
+  digitalWrite(DIR_SHOVEL , HIGH);
+  digitalWrite(STEP_SHOVEL, LOW); 
+  delayMicroseconds(100);
+}
+
+// движение конвейера вперёд
+void conv_forward()
+{
+  digitalWrite(DIR_CONV , LOW);
+  digitalWrite(STEP_CONV, HIGH); 
+  delayMicroseconds(100);
+  digitalWrite(DIR_CONV , LOW);
+  digitalWrite(STEP_CONV, LOW); 
+  delayMicroseconds(100);
+}
+
+// движение конвейера назад
+void conv_backward()
+{
+  digitalWrite(DIR_CONV , HIGH);
+  digitalWrite(STEP_CONV, HIGH); 
+  delayMicroseconds(100);
+  digitalWrite(DIR_CONV , HIGH);
+  digitalWrite(STEP_CONV, LOW); 
+  delayMicroseconds(100);
+}
+
 // возврат системы сортировка в начальное положение
 void return_shovel_to_centre()
 {
   while(!digitalRead(FIRST_BUTTON))
   {
-    digitalWrite(DIR_SHOVEL, LOW);
-    digitalWrite(STEP_SHOVEL, HIGH);  
+    shovel_right();  
   }
-  digitalWrite(DIR_SHOVEL, HIGH);
-  digitalWrite(STEP_SHOVEL, HIGH);   
-  delay(1000);  
+  for (int i = 0; i < 1000; i++)
+  {
+    shovel_left();
+  }
 }
-
 
 void setup()
 {
