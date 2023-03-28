@@ -50,7 +50,7 @@ int start = 0;
 // подключение к серверу MQTT
 EspMQTTClient client(
   "PREDPROF_RULIT",
-  "MEAV_TOP",
+  "https://www.youtube.com/watch?v=eBGIQ7ZuuiU",
   "mqtt.by",
   "мой логин",
   "мой пароль",
