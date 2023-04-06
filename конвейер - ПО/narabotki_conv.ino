@@ -8,22 +8,22 @@
 #include "Adafruit_NeoPixel.h"
 
 // пины шагового двигателя для конвейера
-#define STEP_CONV     D7 
-#define DIR_CONV      D8
+#define STEP_CONV     13
+#define DIR_CONV      15
 
 // пины шагового двигателя для сортирующей системы
-#define STEP_SHOVEL   D5
-#define DIR_SHOVEL    D6
+#define STEP_SHOVEL   14
+#define DIR_SHOVEL    12
 
 // пины ультразвукового датчика
-#define TRIG_PIN      D3
-#define ECHO_PIN      D4
+#define TRIG_PIN      0
+#define ECHO_PIN      2
 
 // максимальная дистанция датчика
 #define MAX_DISTANCE  200
 
 // пин подключения светодиодной ленты
-#define PIXEL_PIN     D2 
+#define PIXEL_PIN     4
 
 // количество светодиодов на светодиодной ленте
 #define PIXEL_COUNT   16  
@@ -32,10 +32,7 @@
 Adafruit_NeoPixel strip(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 // пин концевого датчика с стороны мотора сортирующей системы
-#define FIRST_BUTTON  D0
-
-// пин концевого датчика с противоположной стороны от мотора сортирующей системы
-#define SECOND_BUTTON D1
+#define ENDER         5
 
 //
 #define COLORS_NUM_FOR_START 2
@@ -136,12 +133,11 @@ void strip_setup()
 // движение сортирующей системы влево
 void shovel_left()
 {
-  digitalWrite(DIR_SHOVEL , LOW);
+  digitalWrite(DIR_SHOVEL,  LOW);
   digitalWrite(STEP_SHOVEL, HIGH); 
-  delayMicroseconds(100);
-  digitalWrite(DIR_SHOVEL , LOW);
+  delayMicroseconds(800);
   digitalWrite(STEP_SHOVEL, LOW); 
-  delayMicroseconds(100);
+  delayMicroseconds(800);
 }
 
 // движение сортирующей системы вправо 
@@ -149,21 +145,19 @@ void shovel_right()
 {
   digitalWrite(DIR_SHOVEL , HIGH);
   digitalWrite(STEP_SHOVEL, HIGH); 
-  delayMicroseconds(100);
-  digitalWrite(DIR_SHOVEL , HIGH);
+  delayMicroseconds(800);
   digitalWrite(STEP_SHOVEL, LOW); 
-  delayMicroseconds(100);
+  delayMicroseconds(800);
 }
 
 // движение конвейера вперёд
 void conv_forward()
 {
-  digitalWrite(DIR_CONV , LOW);
+  digitalWrite(DIR_CONV,  LOW);
   digitalWrite(STEP_CONV, HIGH); 
-  delayMicroseconds(100);
-  digitalWrite(DIR_CONV , LOW);
+  delayMicroseconds(800);
   digitalWrite(STEP_CONV, LOW); 
-  delayMicroseconds(100);
+  delayMicroseconds(800);
 }
 
 // движение конвейера назад
@@ -171,30 +165,37 @@ void conv_backward()
 {
   digitalWrite(DIR_CONV , HIGH);
   digitalWrite(STEP_CONV, HIGH); 
-  delayMicroseconds(100);
-  digitalWrite(DIR_CONV , HIGH);
+  delayMicroseconds(800);
   digitalWrite(STEP_CONV, LOW); 
-  delayMicroseconds(100);
+  delayMicroseconds(800);
 }
 
 // возврат системы сортировка в начальное положение
 void return_shovel_to_centre()
 {
-  while(!digitalRead(FIRST_BUTTON))
+  while (digitalRead(ENDER))
   {
-    shovel_right();  
+    shovel_right();
   }
-  for (int i = 0; i < 1000; i++)
+  for (int i = 0; i < 560; i++)
   {
     shovel_left();
   }
 }
 
+
+void ender_setup()
+{
+  pinMode(ENDER, INPUT_PULLUP);
+}
+
+
 void setup()
 {
-  Serial.begin(9600);
   strip_setup();
+  ender_setup();
   return_shovel_to_centre();
+  Serial.begin(9600);
 }
 
 void loop()
