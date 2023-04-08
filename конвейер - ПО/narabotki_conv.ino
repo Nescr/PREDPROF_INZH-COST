@@ -86,6 +86,44 @@ void return_shovel_to_centre()
   }
 }
 
+void sort_left()
+{
+  for (int i = 0; i < 200; i++)
+  {
+    shovel_right();
+  }
+  delay(2000);
+  for (int i = 0; i < 400; i++)
+  {
+    shovel_left();
+  }
+  delay(2000);
+  for (int i = 0; i < 200; i++)
+  {
+    shovel_right();
+  }
+  delay(2000);
+}
+
+void sort_right()
+{
+  for (int i = 0; i < 200; i++)
+  {
+    shovel_left();
+  }
+  delay(2000);
+  for (int i = 0; i < 400; i++)
+  {
+    shovel_right();
+  }
+  delay(2000);
+  for (int i = 0; i < 200; i++)
+  {
+    shovel_left();
+  }
+  delay(2000);
+}
+
 void motor_setup()
 {
   pinMode(DIR_SHOVEL,  OUTPUT);
